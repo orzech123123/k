@@ -1,0 +1,26 @@
+﻿@using Kompostowanie.ViewModels;
+
+@model PryzmaViewModel
+
+@{
+    ViewBag.Title = "Edytuj pryzmę " + Model.Nazwa;
+}
+
+<div class="row-fluid">
+    <div class="span6">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon"> <i class="icon-align-justify"></i> </span>
+                <h5>@ViewBag.Title</h5>
+            </div>
+
+            <div class="widget-content nopadding">
+                @using (Html.BeginForm("Edit", "Pryzma", FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    @Html.Hidden("Id", Model.Id)
+                    @Html.Partial("PryzmaModelEditor")
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+﻿@using Kompostowanie.ViewModels;
+
+@model DoswiadczenieViewModel
+
+@Html.AntiForgeryToken()
+
+<div class="control-group">
+    <label class="control-label">Nazwa:</label>
+    <div class="controls">
+        @Html.TextBoxFor(d => d.Nazwa, new {@class = "span11", placeholder = "Nazwa"})
+        @Html.ValidationMessageFor(d => d.Nazwa, null, new {@class = "help-inline", style = "color: red"})
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label">Cel:</label>
+    <div class="controls">
+        @Html.TextBoxFor(d => d.Cel, new { @class = "span11", placeholder = "Cel" })
+        @Html.ValidationMessageFor(d => d.Cel, null, new { @class = "help-inline", style = "color: red" })
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label">Data:</label>
+    <div class="controls">
+        @Html.TextBoxFor(d => d.Data, new { Value = Model.Data.ToString("yyyy-MM-dd"), @class = "span11", placeholder = "Data", id = "Data" })
+        @Html.ValidationMessageFor(d => d.Data, null, new {@class = "help-inline", style = "color: red"})
+    </div>
+</div>
+
+<div class="form-actions">
+    <button type="submit" class="btn btn-success">Zapisz</button>
+    @Html.ActionLink("Anuluj", "Index", null, new { @class = "btn" })
+</div>

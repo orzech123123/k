@@ -1,0 +1,285 @@
+﻿@using Kompostowanie.Extensions
+@using Kompostowanie.ViewModels;
+
+@model DoswiadczenieStartViewModel
+
+@{
+    if (Model.Doswiadczenie.Started)
+    {
+        ViewBag.Title = "Podgląd parametrów startowych doświadczenia " + Model.Doswiadczenie.Nazwa;
+    }
+    else
+    {
+        ViewBag.Title = "Start doświadczenia";
+    }
+}
+
+@using (Html.BeginForm("Start", "Doswiadczenie", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    <div class="row-fluid">
+        <div class="span6">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon"> <i class="icon-align-justify"></i> </span>
+                    <h5>Parametry startowe</h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <div class="control-group">
+                        <label class="control-label">Data startowa:</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(d => d.DataStart, new { Value = Model.DataStart.Value.ToString("yyyy-MM-dd"), @class = "span11 datepicker", placeholder = "Data startowa" })
+                            @Html.ValidationMessageFor(d => d.DataStart, null, new { @class = "help-inline", style = "color: red" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row-fluid" id="DoswiadczenieStart">
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon"> <i class="icon-th"></i> </span>
+                    <h5>Doświadczenie</h5>
+                </div>
+                <div class="widget-content nopadding" style="overflow: auto">
+                        @Html.Hidden("id", Model.Doswiadczenie.Id)
+
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>Składnik mieszanki</th>
+                                @foreach (var pryzma in Model.Pryzmy)
+                                {
+                                    <th>@pryzma.Nazwa</th>
+                                }
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var skladnik in Model.Doswiadczenie.Pryzmy[0].Skladniki.OrderBy(s => s.Skladnik))
+                            {
+                                <tr>
+                                    <td>@skladnik.Skladnik.ToDescription() [kg]</td>
+                                    @foreach (var pryzma in Model.Doswiadczenie.Pryzmy)
+                                    {
+                                        <td>@pryzma.Skladniki.Single(s => s.Skladnik == skladnik.Skladnik).MasaSwieza</td>
+                                    }
+                                </tr>
+                            }
+                            </tbody>
+                            <tbody>
+                            <tr>
+                                <td>Ile zebrano na próbki [kg]</td>
+                                <!-- ko template: { name: 'pryzma-ileZebranoNaProbki-template', foreach: pryzmy } -->
+                                <!-- /ko -->
+                            </tr>
+                            <tr>
+                                <td>Masa początkowa [kg]</td>
+                                <!-- ko template: { name: 'pryzma-masaPoczatkowa-template', foreach: pryzmy } -->
+                                <!-- /ko --> 
+                            </tr>
+                            <tr>
+                                <td>Wysokość od brzegu [cm]</td>
+                                <!-- ko template: { name: 'pryzma-wysokoscOdBrzegu-template', foreach: pryzmy } -->
+                                <!-- /ko -->
+                            </tr>
+                            <tr>
+                                <td>Objętość początkowa [dm3]</td>
+                                <!-- ko template: { name: 'pryzma-objetoscPoczatkowa-template', foreach: pryzmy } -->
+                                <!-- /ko -->
+                            </tr>
+                            <tr>
+                                <td>Gęstość [kg/m3]</td>
+                                <!-- ko template: { name: 'pryzma-gestosc-template', foreach: pryzmy } -->
+                                <!-- /ko -->
+                            </tr>
+                            <tr>
+                                <td>Przepływ [dm3/min]</td>
+                                <!-- ko template: { name: 'pryzma-przeplyw-template', foreach: pryzmy } -->
+                                <!-- /ko -->
+                            </tr>
+                            <tr>
+                                <td>Sucha masa [kg]</td>
+                                <!-- ko template: { name: 'pryzma-suchaMasa-template', foreach: pryzmy } -->
+                                <!-- /ko -->
+                            </tr>
+                            <tr>
+                                <td>C org [kg]</td>
+                                <!-- ko template: { name: 'pryzma-cOrg-template', foreach: pryzmy } -->
+                                <!-- /ko -->
+                            </tr>
+                            <tr>
+                                <td>N-tot [g]</td>
+                                <!-- ko template: { name: 'pryzma-nTot-template', foreach: pryzmy } -->
+                                <!-- /ko -->
+                            </tr>
+                            <tr>
+                                <td rowspan="4">pH</td>
+                            </tr>
+                            <tr>
+                                <!-- ko template: { name: 'pryzma-ph1-template', foreach: pryzmy } -->
+                                <!-- /ko -->
+                            </tr>
+                            <tr>
+                                <!-- ko template: { name: 'pryzma-ph2-template', foreach: pryzmy } -->
+                                <!-- /ko -->
+                            </tr>
+                            <tr>
+                                <!-- ko template: { name: 'pryzma-phSrednia-template', foreach: pryzmy } -->
+                                <!-- /ko -->
+                            </tr>
+                            <tr>
+                                <td rowspan="4">Konduktywność [mS]</td>
+                            </tr>
+                            <tr>
+                                <!-- ko template: { name: 'pryzma-konduktywnosc1-template', foreach: pryzmy } -->
+                                <!-- /ko -->
+                            </tr>
+                            <tr>
+                                <!-- ko template: { name: 'pryzma-konduktywnosc2-template', foreach: pryzmy } -->
+                                <!-- /ko -->
+                            </tr>
+                            <tr>
+                                <!-- ko template: { name: 'pryzma-konduktywnoscSrednia-template', foreach: pryzmy } -->
+                                <!-- /ko -->
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <div data-bind="template: { name: 'pryzmy-hiddens-template', foreach: pryzmy }"></div>
+
+                        <div class="form-actions">
+                            @if (!Model.Doswiadczenie.Started)
+                            {
+                                <button type="submit" class="btn btn-success">Start</button>
+                                @Html.ActionLink("Anuluj", "Index", "Doswiadczenie", null, new { @class = "btn" })
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Wróć", "Index", "Doswiadczenie", null, new { @class = "btn" })
+                            }
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script id="pryzmy-hiddens-template" type="text/html">
+    <input type="hidden" name="Pryzmy.index" data-bind="value: $index" />
+    <input type="hidden" data-bind="value: pryzmaId, attr: { name : 'Pryzmy['+ $index() +'].PryzmaId' }" />
+    <input type="hidden" data-bind="value: ileZebranoNaProbki, attr: { name : 'Pryzmy['+ $index() +'].IleZebranoNaProbki' }" />
+    <input type="hidden" data-bind="value: wysokoscOdBrzegu, attr: { name : 'Pryzmy['+ $index() +'].WysokoscOdBrzegu' }" />
+    <input type="hidden" data-bind="value: przeplyw, attr: { name : 'Pryzmy['+ $index() +'].Przeplyw' }" />
+    <input type="hidden" data-bind="value: ph1, attr: { name : 'Pryzmy['+ $index() +'].Ph1' }" />
+    <input type="hidden" data-bind="value: ph2, attr: { name : 'Pryzmy['+ $index() +'].Ph2' }" />
+    <input type="hidden" data-bind="value: konduktywnosc1, attr: { name : 'Pryzmy['+ $index() +'].Konduktywnosc1' }" />
+    <input type="hidden" data-bind="value: konduktywnosc2, attr: { name : 'Pryzmy['+ $index() +'].Konduktywnosc2' }" />
+</script>
+
+<script type="text/html" id="pryzma-masaPoczatkowa-template">
+    <td data-bind="text: masaPoczatkowaDisplayModel"></td>
+</script>
+
+<script type="text/html" id="pryzma-ileZebranoNaProbki-template">
+    <td>
+        <input type="number" min="0.1" max="2" step="0.0001" data-bind="value: ileZebranoNaProbkiDisplayModel">
+    </td>
+</script>
+
+<script type="text/html" id="pryzma-wysokoscOdBrzegu-template">
+    <td>
+        <input type="number" min="0" max="30" step="0.0001" data-bind="value: wysokoscOdBrzeguDisplayModel">
+    </td>
+</script>
+
+<script type="text/html" id="pryzma-objetoscPoczatkowa-template">
+    <td data-bind="text: objetoscPoczatkowaDisplayModel"></td>
+</script>
+
+<script type="text/html" id="pryzma-gestosc-template">
+    <td data-bind="text: gestoscDisplayModel"></td>
+</script>
+
+<script type="text/html" id="pryzma-przeplyw-template">
+    <td>
+        <input type="number" min="0.5" max="20" step="0.0001" data-bind="value: przeplywDisplayModel">
+    </td>
+</script>
+
+<script type="text/html" id="pryzma-suchaMasa-template">
+    <td data-bind="text: suchaMasaDisplayModel"></td>
+</script>
+
+<script type="text/html" id="pryzma-cOrg-template">
+    <td data-bind="text: cOrgDisplayModel"></td>
+</script>
+
+<script type="text/html" id="pryzma-nTot-template">
+    <td data-bind="text: nTotDisplayModel"></td>
+</script>
+
+<script type="text/html" id="pryzma-ph1-template">
+    <td>
+        <input type="number" min="0" max="14" step="0.0001" data-bind="value: ph1DisplayModel">
+    </td>
+</script>
+
+<script type="text/html" id="pryzma-ph2-template">
+    <td>
+        <input type="number" min="0" max="14" step="0.0001" data-bind="value: ph2DisplayModel">
+    </td>
+</script>
+
+<script type="text/html" id="pryzma-phSrednia-template">
+    <td data-bind="text: phSredniaDisplayModel"></td>
+</script>
+
+<script type="text/html" id="pryzma-konduktywnosc1-template">
+    <td>
+        <input type="number" min="0.001" max="50" step="0.0001" data-bind="value: konduktywnosc1DisplayModel">
+    </td>
+</script>
+
+<script type="text/html" id="pryzma-konduktywnosc2-template">
+    <td>
+        <input type="number" min="0.001" max="50" step="0.0001" data-bind="value: konduktywnosc2DisplayModel">
+    </td>
+</script>
+
+<script type="text/html" id="pryzma-konduktywnoscSrednia-template">
+    <td data-bind="text: konduktywnoscSredniaDisplayModel"></td>
+</script>
+
+@section scripts {
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+    <script src="~/Scripts/knockout-3.4.1.js"></script>
+    <script src="~/Scripts/linq.js"></script>
+    <script src="~/Scripts/Kompostowanie/DoswiadczenieStartViewModel.js"></script>
+
+    <script type="text/javascript">
+        $(function() {
+            var model = @Html.Raw(Model.ToJson());
+            var viewModel = new DoswiadczenieStartViewModel(model);
+
+            ko.applyBindings(viewModel, document.getElementById("DoswiadczenieStart"));
+
+            $(".datepicker")
+                .datepicker({
+                    format: 'yyyy-mm-dd'
+                });
+
+            $("form").submit(function() {
+                return viewModel.isValid();
+            });
+
+            @if(Model.Doswiadczenie.Started)
+            {
+                <text>
+                $("input").prop("disabled", "disabled");
+                </text>
+            }
+        });
+    </script>
+}

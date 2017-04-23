@@ -1,0 +1,192 @@
+﻿@using Kompostowanie.ViewModels;
+
+@model DoswiadczeniePomiarViewModel
+
+@{
+    if (ViewBag.Create)
+    {
+        ViewBag.Title = "Dodaj pomiar do doświadczenia " + Model.Record.Doswiadczenie.Nazwa;
+    }
+    else
+    {
+        ViewBag.Title = "Podgląd pomiaru doświadczenia " + Model.Record.Doswiadczenie.Nazwa;
+    }
+}
+
+<div class="row-fluid" id="DoswiadczeniePomiar">
+    <div class="span12">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon"> <i class="icon-th"></i> </span>
+                <h5>Pomiar</h5>
+            </div>
+            <div class="widget-content nopadding" style="overflow: auto">
+                @using (Html.BeginForm("Create", "Pomiar", FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    @Html.Hidden("id", Model.Record.Doswiadczenie.Id)
+
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Dzień</th>
+                            <th>Godzina</th>
+                            <th>Czas [h]</th>
+                            <th>Dzień</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                                <input class="datepicker" data-bind="value: dataDisplayModel">
+                            </td>
+                            <td data-bind="text: dzienDisplayModel">
+                            </td>
+                            <td>
+                                <input type="number" min="0" step="0.0001" data-bind="value: godzinaDisplayModel">
+                            </td>
+                            <td data-bind="text: czasComputedDisplayModel"></td>
+                            <td data-bind="text: dzienComputedDisplayModel"></td>
+                        </tr>
+                        </tbody>      
+                    </table>
+
+                    <div></div>
+
+                    <!-- ko template: { name: 'pomiar-group-template', foreach: pomiaryGrouped } -->
+                    <!-- /ko -->
+
+                    <!-- ko template: { name: 'pomiar-hidden-template', foreach: pomiary } -->
+                    <!-- /ko -->
+
+                    <!-- ko template: { name: 'pomiar-group-template', foreach: stanyLicznikowGrouped } -->
+                    <!-- /ko -->
+
+                    <!-- ko template: { name: 'stanLicznika-hidden-template', foreach: stanyLicznikow } -->
+                    <!-- /ko -->
+
+                    <!-- ko template: { name: 'pomiar-group-template', foreach: przeplywyGrouped } -->
+                    <!-- /ko -->
+
+                    <!-- ko template: { name: 'przeplyw-hidden-template', foreach: przeplywy } -->
+                    <!-- /ko -->
+
+                    <div data-bind="template: { name: 'pomiary-hiddens-template', data: $root }"></div>
+
+                    <div class="form-actions">
+                        @if (ViewBag.Create)
+                        {
+                            <button type="submit" class="btn btn-success">Zapisz</button>
+                            @Html.ActionLink("Anuluj", "Index", "Pomiar", new { id = Model.Record.Doswiadczenie.Id }, new { @class = "btn" })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Wróć", "Index", "Pomiar", new { id = Model.Record.Doswiadczenie.Id }, new { @class = "btn" })
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/html" id="pomiar-hidden-template">
+    <input type="hidden" name="Pomiary.index" data-bind="value: $index" />
+    <input type="hidden" data-bind="value: pryzmaId, attr: { name : 'Pomiary['+ $index() +'].PryzmaId' }" />
+    <input type="hidden" data-bind="value: pryzmaName, attr: { name : 'Pomiary['+ $index() +'].PryzmaName' }" />
+    <input type="hidden" data-bind="value: typ, attr: { name : 'Pomiary['+ $index() +'].Typ' }" />
+    <input type="hidden" data-bind="value: value, attr: { name : 'Pomiary['+ $index() +'].Value' }" />
+    <input type="hidden" data-bind="value: typName, attr: { name : 'Pomiary['+ $index() +'].TypName' }" />
+</script>
+
+<script type="text/html" id="stanLicznika-hidden-template">
+    <input type="hidden" name="StanyLicznikow.index" data-bind="value: $index" />
+    <input type="hidden" data-bind="value: pryzmaId, attr: { name : 'StanyLicznikow['+ $index() +'].PryzmaId' }" />
+    <input type="hidden" data-bind="value: pryzmaName, attr: { name : 'StanyLicznikow['+ $index() +'].PryzmaName' }" />
+    <input type="hidden" data-bind="value: typ, attr: { name : 'StanyLicznikow['+ $index() +'].Typ' }" />
+    <input type="hidden" data-bind="value: value, attr: { name : 'StanyLicznikow['+ $index() +'].Value' }" />
+    <input type="hidden" data-bind="value: typName, attr: { name : 'StanyLicznikow['+ $index() +'].TypName' }" />
+</script>
+
+<script type="text/html" id="przeplyw-hidden-template">
+    <input type="hidden" name="Przeplywy.index" data-bind="value: $index" />
+    <input type="hidden" data-bind="value: pryzmaId, attr: { name : 'Przeplywy['+ $index() +'].PryzmaId' }" />
+    <input type="hidden" data-bind="value: pryzmaName, attr: { name : 'Przeplywy['+ $index() +'].PryzmaName' }" />
+    <input type="hidden" data-bind="value: typ, attr: { name : 'Przeplywy['+ $index() +'].Typ' }" />
+    <input type="hidden" data-bind="value: value, attr: { name : 'Przeplywy['+ $index() +'].Value' }" />
+    <input type="hidden" data-bind="value: typName, attr: { name : 'Przeplywy['+ $index() +'].TypName' }" />
+</script>
+
+<script type="text/html" id="pomiary-hiddens-template">
+    <input type="hidden" data-bind="value: dataDisplayModel, attr: { name : 'Data' }" />
+    <input type="hidden" data-bind="value: dzienDisplayModel, attr: { name : 'Dzien' }" />
+    <input type="hidden" data-bind="value: godzinaDisplayModel, attr: { name : 'Godzina' }" />
+    <input type="hidden" data-bind="value: czasComputed, attr: { name : 'CzasComputed' }" />
+    <input type="hidden" data-bind="value: dzienComputed, attr: { name : 'DzienComputed' }" />
+</script>
+
+<script type="text/html" id="pomiar-group-template">
+    <table class="table table-striped">
+        <tbody>  
+            <tr>
+                <th style="width: 20%; vertical-align: middle" data-bind="text: $data[0].typName(), attr: { rowspan: $data.length + 1}"></th>
+            </tr>          
+            <!-- ko template: { name: 'pomiar-template', foreach: $data } -->
+            <!-- /ko -->
+        </tbody>
+    </table>
+</script>
+
+<script type="text/html" id="pomiar-template">
+    <tr>        
+        <td>
+            <span data-bind="text: pryzmaName"></span>       
+            <!-- ko if: typ() != 'Przeplyw' -->
+            <input type="number" step="0.0001" data-bind="value: valueDisplayModel, attr: { min: minValue, max: maxValue }">    
+            <!-- /ko -->       
+            <!-- ko if: typ() == 'Przeplyw' -->   
+            <span data-bind="text: valueDisplayModel"></span> 
+            <!-- /ko -->   
+        </td>    
+    </tr>
+</script>
+
+@section scripts {
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+    <script src="~/Scripts/knockout-3.4.1.js"></script>
+    <script src="~/Scripts/linq.js"></script>
+    <script src="~/Scripts/Kompostowanie/DoswiadczeniePomiarViewModel.js"></script>
+
+    <script type="text/javascript">
+        $(function() {
+            var first = @(ViewBag.First != null ? Html.Raw(ViewBag.First.ToJson()) : "null");
+            var model = @Html.Raw(Model.ToJson());
+
+            var firstViewModel = first != null ? new DoswiadczeniePomiarViewModel(first) : null;
+            var viewModel = new DoswiadczeniePomiarViewModel(model, firstViewModel);
+
+            ko.applyBindings(viewModel, document.getElementById("DoswiadczeniePomiar"));
+
+            $("form").submit(function() {
+                return viewModel.isValid();
+            });
+
+            $(".datepicker")
+                .datepicker({
+                    format: 'yyyy-mm-dd'
+                })
+                .on("changeDate",
+                    function() {
+                        $(this).change();
+                    });
+
+
+            @if(!ViewBag.Create)
+            {
+                <text>
+                $("input").prop("disabled", "disabled");
+                </text>
+            }
+        });
+    </script>
+}

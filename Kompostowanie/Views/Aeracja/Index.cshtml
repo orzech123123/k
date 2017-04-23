@@ -1,0 +1,50 @@
+﻿@model Kompostowanie.ViewModels.DoswiadczenieAeracjaIndexViewModel
+@{
+    ViewBag.Title = "Aeracje doświadczenia " + Model.Doswiadczenie.Nazwa;
+}
+
+@if (Model.Doswiadczenie.Started && !Model.Doswiadczenie.Stopped)
+{
+    <div class="row-fluid" style="text-align: right">
+        <div class="span12">
+            @Html.ActionLink("Dodaj aerację", "Create", new { id = Model.Doswiadczenie.Id }, new { @class = "btn btn-success" })
+        </div>
+    </div>
+}
+
+<div class="row-fluid">
+    <div class="span12">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon"> <i class="icon-th"></i> </span>
+                <h5>@ViewBag.Title</h5>
+            </div>
+            <div class="widget-content nopadding">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>Nazwa</th>
+                        <th>Akcje</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var aeracja in Model.Aeracje.ToList())
+                        {
+                            <tr>
+                                <td>@aeracja.Nazwa</td>
+                                <td>
+                                    @Html.ActionLink("Podgląd", "Create", "Aeracja", new { id = Model.Doswiadczenie.Id, aeracjaId = aeracja.Id }, new { @class = "btn" })
+                                    
+                                    @if (Model.Doswiadczenie.Started && !Model.Doswiadczenie.Stopped)
+                                    {
+                                        @Html.ActionLink("Usuń", "Delete", "Aeracja", new { id = aeracja.Id }, new { @class = "btn btn-danger" })
+                                    }
+                                </td> 
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

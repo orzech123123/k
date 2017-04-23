@@ -1,0 +1,135 @@
+﻿@using Kompostowanie.Helpers
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Kompostowanie</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="~/Styles/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/Styles/bootstrap-responsive.min.css" />
+        <link rel="stylesheet" href="~/Styles/fullcalendar.css" />
+        <link rel="stylesheet" href="~/Styles/matrix-style.css" />
+        <link rel="stylesheet" href="~/Styles/matrix-media.css" />
+        <link href="~/Styles/font-awesome/font-awesome.css" rel="stylesheet" />
+        <link rel="stylesheet" href="~/Styles/jquery.gritter.css" />
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+    </head>
+    <body>
+        <div id="header">
+            <h1>
+                <a href="dashboard.html"></a>
+            </h1>
+        </div>     
+          
+        <div id="user-nav" class="navbar navbar-inverse" style="text-align: right">
+            <ul class="nav">
+                @if (SessionHelper.UserSession(Session) != null)
+                {
+                    <li class=""><a href="#"><i class="icon icon-user"></i> <span class="text">Zalogowany jako @SessionHelper.UserSession(Session).Username</span></a></li>
+                    <li class=""><a title="" href="@Url.Action("Logout", "User")"><i class="icon icon-signout"></i> <span class="text">Wyloguj</span></a></li>
+                }
+                else
+                {
+                    <li class=""><a title="" href="@Url.Action("Login", "User")"><i class="icon icon-signin"></i> <span class="text">Zaloguj</span></a></li>
+                }
+
+                <li class=""><a title="" href="@Url.Action("Register", "User")"><i class="icon icon-user"></i> <span class="text">Zarejestruj</span></a></li>
+            </ul>
+        </div>
+       
+        <div id="sidebar">
+            <a href="#" class="visible-phone"><i class="icon icon-home"></i> Menu</a>
+            <ul>
+                @if (SessionHelper.UserSession(Session) != null)
+                {
+                    <li class="active"><a href="@Url.Action("Index", "Doswiadczenie")"><i class="icon icon-home"></i><span> Doświadczenia</span></a> </li>
+                }
+            </ul>
+        </div>
+       
+        <div id="content">
+            <div id="content-header">
+                <div id="breadcrumb">
+                     <a href="#" class="tip-bottom"><i @*class="icon-home"*@></i>@ViewBag.Title</a>
+                </div>
+            </div>
+            <div class="container-fluid">
+                @if (Notifier.HasErrors())
+                {
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <div class="widget-box">
+                                <div class="widget-content nopadding">
+                                    @foreach (var error in Notifier.GetAndRemoveErrors())
+                                    {
+                                        <div class="alert alert-error">
+                                            @error
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                @RenderBody()
+            </div>
+        </div>
+
+        <div class="row-fluid">
+            <div id="footer" class="span12">
+                2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a>
+            </div>
+        </div>
+
+        <script src="~/Scripts/excanvas.min.js"></script>
+        <script src="~/Scripts/jquery.min.js"></script>
+        <script src="~/Scripts/jquery.ui.custom.js"></script>
+        <script src="~/Scripts/bootstrap.min.js"></script>
+
+        @RenderSection("Scripts", false)
+
+        <script src="~/Scripts/jquery.flot.min.js"></script>
+        <script src="~/Scripts/jquery.flot.resize.min.js"></script>
+        <script src="~/Scripts/jquery.peity.min.js"></script>
+        <script src="~/Scripts/fullcalendar.min.js"></script>
+        <script src="~/Scripts/matrix.js"></script>
+        <script src="~/Scripts/matrix.dashboard.js"></script>
+        <script src="~/Scripts/jquery.gritter.min.js"></script>
+        <script src="~/Scripts/matrix.interface.js"></script>
+        <script src="~/Scripts/matrix.chat.js"></script>
+        <script src="~/Scripts/jquery.validate.js"></script>
+        <script src="~/Scripts/matrix.form_validation.js"></script>
+        <script src="~/Scripts/jquery.wizard.js"></script>
+        <script src="~/Scripts/jquery.uniform.js"></script>
+        <script src="~/Scripts/select2.min.js"></script>
+        <script src="~/Scripts/matrix.popover.js"></script>
+        <script src="~/Scripts/jquery.dataTables.min.js"></script>
+        <script src="~/Scripts/matrix.tables.js"></script>
+
+        <script type="text/javascript">
+                // This function is called from the pop-up menus to transfer to
+                // a different page. Ignore if the value returned is a null string:
+                function goPage(newURL) {
+
+                    // if url is empty, skip the menu dividers and reset the menu selection to default
+                    if (newURL != "") {
+
+                        // if url is "-", it is this page -- reset the menu:
+                        if (newURL == "-") {
+                            resetMenu();
+                        }
+                        // else, send page to designated URL
+                        else {
+                            document.location.href = newURL;
+                        }
+                    }
+                }
+
+                // resets the menu selection upon entry to this page:
+                function resetMenu() {
+                    document.gomenu.selector.selectedIndex = 2;
+                }
+        </script>
+    </body>
+</html>

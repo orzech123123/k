@@ -1,0 +1,45 @@
+﻿@using Kompostowanie.ViewModels;
+
+@model UserViewModel
+
+@{
+    ViewBag.Title = "Zaloguj się";
+}
+
+<div class="row-fluid">
+    <div class="span6">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon"> <i class="icon-align-justify"></i> </span>
+                <h5>@ViewBag.Title</h5>
+            </div>
+            <div class="widget-content nopadding">
+                @using (Html.BeginForm("Login", "User", FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="control-group">
+                        <label class="control-label">Nazwa użytkownika:</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(u => u.Username, new { @class = "span11", placeholder = "Nazwa użytkownika" })
+                            @Html.ValidationMessageFor(u => u.Username, null, new { @class = "help-inline", style = "color: red" })
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Hasło:</label>
+                        <div class="controls">
+                            @Html.PasswordFor(u => u.Password, new { @class = "span11", placeholder = "Hasło" })
+                            @Html.ValidationMessageFor(u => u.Password, null, new { @class = "help-inline", style = "color: red" })
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-success">Zaloguj</button>
+                        @Html.ActionLink("Anuluj", "Index", "Doswiadczenie", null, new { @class = "btn" })
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

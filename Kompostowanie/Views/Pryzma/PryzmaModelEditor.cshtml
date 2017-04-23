@@ -1,0 +1,18 @@
+﻿@using Kompostowanie.ViewModels;
+
+@model PryzmaViewModel
+
+@Html.AntiForgeryToken()
+@Html.HiddenFor(p => p.DoswiadczenieId)
+
+<div class="control-group">
+    <label class="control-label">Nazwa:</label>
+    <div class="controls">
+        @Html.TextBoxFor(d => d.Nazwa, new {@class = "span11", placeholder = "Nazwa"})
+        @Html.ValidationMessageFor(d => d.Nazwa, null, new {@class = "help-inline", style = "color: red"})
+    </div>
+</div>
+<div class="form-actions">
+    <button type="submit" class="btn btn-success">Zapisz</button>
+    @Html.ActionLink("Anuluj", "Index", new { id = Model.DoswiadczenieId }, new {@class = "btn"})
+</div>

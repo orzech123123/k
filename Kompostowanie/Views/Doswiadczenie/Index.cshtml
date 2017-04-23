@@ -1,0 +1,88 @@
+﻿@model IEnumerable<Kompostowanie.Records.DoswiadczenieRecord>
+
+@{
+    ViewBag.Title = "Doświadczenia";
+}
+
+<div class="row-fluid" style="text-align: right">
+    <div class="span12">
+        @Html.ActionLink("Dodaj doświadczenie", "Create", null, new { @class = "btn btn-success" })
+    </div>
+</div>
+
+<div class="row-fluid">
+    <div class="span12">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon"> <i class="icon-th"></i> </span>
+                <h5>Doświadczenia</h5>
+            </div>
+            <div class="widget-content nopadding">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>Nazwa</th>
+                        <th>Data</th>
+                        <th>Akcje</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var doswiadczenie in Model)
+                        {
+                            <tr>
+                                <td>@doswiadczenie.Nazwa</td>
+                                <td>@doswiadczenie.Data.ToString("yyyy-MM-dd HH:mm")</td>
+                                <td>
+                                    @Html.ActionLink("Edytuj", "Edit", "Doswiadczenie", new { id = doswiadczenie.Id }, new { @class = "btn" })
+                                    @Html.ActionLink("Pryzmy", "Index", "Pryzma", new { id = doswiadczenie.Id }, new { @class = "btn" })
+                                    
+                                    @if (doswiadczenie.Started)
+                                    {
+                                        @Html.ActionLink("Pomiary", "Index", "Pomiar", new { id = doswiadczenie.Id }, new { @class = "btn" })
+                                    }
+
+                                    @if (!doswiadczenie.Started)
+                                    {
+                                        @Html.ActionLink("Rozpocznij", "Start", "Doswiadczenie", new { id = doswiadczenie.Id }, new { @class = "btn btn-success" })
+                                    }
+
+                                    @if (doswiadczenie.Started)
+                                    {
+                                        @Html.ActionLink("Podgląd (start)", "Start", "Doswiadczenie", new { id = doswiadczenie.Id }, new { @class = "btn" })
+                                    }
+
+                                    @if (doswiadczenie.Started && !doswiadczenie.Stopped)
+                                    {
+                                        @Html.ActionLink("Zakończ", "Stop", "Doswiadczenie", new { id = doswiadczenie.Id }, new { @class = "btn btn-danger" })
+                                    }
+
+                                    @if (doswiadczenie.Started && doswiadczenie.Stopped)
+                                    {
+                                        @Html.ActionLink("Podgląd (zakończ)", "Stop", "Doswiadczenie", new { id = doswiadczenie.Id }, new { @class = "btn" })
+                                    }
+
+                                    @if (doswiadczenie.Started)
+                                    {
+                                        @Html.ActionLink("Aeracje", "Index", "Aeracja", new { id = doswiadczenie.Id }, new { @class = "btn" })
+                                    }
+
+                                    <div class="btn-group">
+                                        <button data-toggle="dropdown" class="btn dropdown-toggle">Wykresy <span class="caret"></span></button>
+                                        <ul class="dropdown-menu">
+                                            <li>@Html.ActionLink("Dwutlenek węgla", "Co2", "Wykres", new { id = doswiadczenie.Id }, null)</li>
+                                            <li>@Html.ActionLink("Temperatura", "Temperatura", "Wykres", new { id = doswiadczenie.Id }, null)</li>
+                                            <li>@Html.ActionLink("Przepływ", "Przeplyw", "Wykres", new { id = doswiadczenie.Id }, null)</li>
+                                            <li>@Html.ActionLink("Stężenie tlenu", "O2", "Wykres", new { id = doswiadczenie.Id }, null)</li>
+                                        </ul>
+                                    </div>
+
+                                    @Html.ActionLink("Usuń", "Delete", "Doswiadczenie", new { id = doswiadczenie.Id }, new { @class = "btn btn-danger" })
+                                </td> 
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+﻿@model Kompostowanie.ViewModels.PryzmaIndexViewModel
+
+@{
+    ViewBag.Title = "Pryzmy doświadczenia " + Model.Doswiadczenie.Nazwa;
+}
+
+<div class="row-fluid" style="text-align: right">
+    <div class="span12">
+        @Html.ActionLink("Dodaj pryzmę", "Create", new { id = Model.Doswiadczenie.Id }, new { @class = "btn btn-success" })
+    </div>
+</div>
+
+<div class="row-fluid">
+    <div class="span12">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon"> <i class="icon-th"></i> </span>
+                <h5>Pryzmy doświadczenia @Model.Doswiadczenie.Nazwa</h5>
+            </div>
+            <div class="widget-content nopadding">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>Nazwa</th>
+                        <th>Akcje</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var pryzma in Model.Pryzmy)
+                        {
+                            <tr>
+                                <td>@pryzma.Nazwa</td>
+                                <td>
+                                    @Html.ActionLink("Składniki", "Index", "Skladnik", new { id = pryzma.Id }, new { @class = "btn" })
+                                    @Html.ActionLink("Edytuj", "Edit", "Pryzma", new { id = pryzma.Id }, new { @class = "btn" })
+                                    @Html.ActionLink("Usuń", "Delete", "Pryzma", new { id = pryzma.Id }, new { @class = "btn btn-danger" })
+                                </td> 
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

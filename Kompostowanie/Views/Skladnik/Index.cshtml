@@ -1,0 +1,182 @@
+﻿@using Kompostowanie.Helpers
+@using Kompostowanie.Records
+@model Kompostowanie.ViewModels.SkladnikiViewModel
+
+@{
+    ViewBag.Title = "Składnik pryzmy " + Model.Pryzma.Nazwa;
+}
+
+<div class="row-fluid" id="Skladniki">
+    <div class="span12">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon"> <i class="icon-align-justify"></i> </span>
+                <h5>Pryzma</h5>
+            </div>
+            <div class="widget-content nopadding">
+                <form class="form-horizontal">
+                    <div class="control-group">
+                        <label class="control-label">Sucha masa:</label>
+                        <div class="controls" data-bind="text: suchaMasaDisplayModel">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Wilgotność ostateczna:</label>
+                        <div class="controls" data-bind="text: wilgotnoscOstatecznaDisplayModel">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon"> <i class="icon-th"></i> </span>
+                <h5>Składniki</h5>
+            </div>
+            <div class="widget-content nopadding" style = "overflow: auto" >
+                @using (Html.BeginForm("Index", "Skladnik", FormMethod.Post, new {@class = "form-horizontal" }))
+                {
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>Składnik</th>
+                            <th>Sucha masa [%]</th>
+                            <th>Udział [%]</th>
+                            <th>Ilość w s. m. [kg]</th>
+                            <th>Masa św. [kg]</th>
+                            <th>Zawartość C [g/kg]</th>
+                            <th>Zawartość N [g/kg]</th>
+                            <th>Masa C [g]</th>
+                            <th>Masa N [g]</th>
+                            <th>C/N</th>
+                            <th>Akcje</th>
+                        </tr>
+                        </thead>
+                        <tbody data-bind="template: { name: 'skladnik-template', foreach: skladniki }"></tbody>
+                        <thead data-bind="template: { name: 'skladniki-result-template', data: $root }"></thead>
+                        <tbody data-bind="template: { name: 'skladnik-itemToAdd-template', data: itemToAdd }"></tbody>
+                    </table>
+
+                    <div data-bind="template: { name: 'skladniki-result-hiddens-template', data: $root }"></div>
+                    <div data-bind="template: { name: 'skladniki-hiddens-template', foreach: skladniki }"></div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-success">Zapisz</button>
+                        @Html.ActionLink("Anuluj", "Index", "Pryzma", new {id = Model.Pryzma.Doswiadczenie.Id}, new {@class = "btn"})
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/html" id="skladnik-template">
+    <tr>
+        <td data-bind="text: skladnik"></td>
+        <td data-bind="text: suchaMasaDisplayModel"></td>
+        <td data-bind="text: udzialDisplayModel"></td>
+        <td data-bind="text: iloscWSmDisplayModel"></td>
+        <td data-bind="text: masaSwiezaDisplayModel"></td>
+        <td data-bind="text: zawartoscCDisplayModel"></td>
+        <td data-bind="text: zawartoscNDisplayModel"></td>
+        <td data-bind="text: masaCDisplayModel"></td>
+        <td data-bind="text: masaNDisplayModel"></td>
+        <td data-bind="text: cnDisplayModel"></td>
+        <td>
+            <button class="btn" data-bind="click: $root.edit">Edytuj</button>
+            <button class="btn btn-danger" data-bind="click: $root.remove">Usuń</button>
+        </td>
+    </tr>
+</script>
+
+<script type="text/html" id="skladnik-itemToAdd-template">
+    <tr>
+        <td>
+            @Html.EnumDropDownListWithDescription(Skladnik.Sloma, new { data_bind = "value: skladnik"})
+        </td>
+        <td>
+            <input type="number" min="0" max="100" step="0.0001" data-bind="value: suchaMasaDisplayModel">
+        </td>
+        <td data-bind="text: udzialDisplayModel"></td>
+        <td data-bind="text: iloscWSmDisplayModel"></td>
+        <td>
+            <input type="number" min="0.1" max="100" step="0.0001" data-bind="value: masaSwiezaDisplayModel">
+        </td>
+        <td>
+            <input type="number" min="0" max="1000" step="0.0001" data-bind="value: zawartoscCDisplayModel">
+        </td>
+        <td>
+            <input type="number" min="0" max="1000" step="0.0001" data-bind="value: zawartoscNDisplayModel">
+        </td>
+        <td data-bind="text: masaCDisplayModel"></td>
+        <td data-bind="text: masaNDisplayModel"></td>
+        <td data-bind="text: cnDisplayModel"></td>
+        <td>
+            <button class="btn btn-success" data-bind="click: $root.add">Dodaj</button>
+        </td>
+    </tr>
+</script>
+
+<script type="text/html" id="skladniki-result-template">
+    <tr>
+        <th>
+            Wilgotność [%]
+        </th>
+        <th data-bind="text: wilgotnoscDisplayModel"></th>
+        <th data-bind="text: udzialSumaDisplayModel"></th>
+        <th data-bind="text: iloscWSmSumaDisplayModel"></th>
+        <th data-bind="text: masaSwiezaSumaDisplayModel"></th>
+        <th></th>
+        <th></th>
+        <th data-bind="text: masaCSumaDisplayModel"></th>
+        <th data-bind="text: masaNSumaDisplayModel"></th>
+        <th data-bind="text: cnDisplayModel"></th>
+        <th></th>
+    </tr>
+</script>
+
+<script type="text/html" id="skladniki-result-hiddens-template">
+    <input type="hidden" data-bind="value: suchaMasa, attr: { name : 'SuchaMasa' }" />
+    <input type="hidden" data-bind="value: wilgotnoscOstateczna, attr: { name : 'WilgotnoscOstateczna' }" />
+    <input type="hidden" data-bind="value: wilgotnosc, attr: { name : 'Wilgotnosc' }" />
+    <input type="hidden" data-bind="value: udzialSuma, attr: { name : 'UdzialSuma' }" />
+    <input type="hidden" data-bind="value: iloscWSmSuma, attr: { name : 'IloscWSmSuma' }" />
+    <input type="hidden" data-bind="value: masaSwiezaSuma, attr: { name : 'MasaSwiezaSuma' }" />
+    <input type="hidden" data-bind="value: masaCSuma, attr: { name : 'MasaCSuma' }" />
+    <input type="hidden" data-bind="value: masaNSuma, attr: { name : 'MasaNSuma' }" />
+    <input type="hidden" data-bind="value: cn, attr: { name : 'Cn' }" />
+</script>
+
+<script id="skladniki-hiddens-template" type="text/html">
+    <input type="hidden" name="Skladniki.index" data-bind="value: $index" />
+    <input type="hidden" data-bind="value: skladnik, attr: { name : 'Skladniki['+ $index() +'].Skladnik' }" />
+    <input type="hidden" data-bind="value: suchaMasa, attr: { name : 'Skladniki['+ $index() +'].SuchaMasa' }" />
+    <input type="hidden" data-bind="value: udzial, attr: { name : 'Skladniki['+ $index() +'].Udzial' }" />
+    <input type="hidden" data-bind="value: iloscWSm, attr: { name : 'Skladniki['+ $index() +'].IloscWSm' }" />
+    <input type="hidden" data-bind="value: masaSwieza, attr: { name : 'Skladniki['+ $index() +'].MasaSwieza' }" />
+    <input type="hidden" data-bind="value: zawartoscC, attr: { name : 'Skladniki['+ $index() +'].ZawartoscC' }" />
+    <input type="hidden" data-bind="value: zawartoscN, attr: { name : 'Skladniki['+ $index() +'].ZawartoscN' }" />
+    <input type="hidden" data-bind="value: masaC, attr: { name : 'Skladniki['+ $index() +'].MasaC' }" />
+    <input type="hidden" data-bind="value: masaN, attr: { name : 'Skladniki['+ $index() +'].MasaN' }" />
+    <input type="hidden" data-bind="value: cn, attr: { name : 'Skladniki['+ $index() +'].Cn' }" />
+</script>
+
+@section scripts {
+    <script src="~/Scripts/knockout-3.4.1.js"></script>
+    <script src="~/Scripts/linq.js"></script>
+    <script src="~/Scripts/Kompostowanie/SkladnikiViewModel.js"></script>
+
+    <script type="text/javascript">
+        $(function() {
+            var model = @Html.Raw(Model.ToJson());
+            var viewModel = new SkladnikListViewModel(model, '@Skladnik.Sloma.ToString()');
+
+            ko.applyBindings(viewModel, document.getElementById("Skladniki"));
+
+            $("form").submit(function() {
+                return viewModel.skladniki().length > 0 && !isNaN(viewModel.suchaMasa()) && !isNaN(viewModel.wilgotnoscOstateczna());
+            });
+        });
+    </script>
+}

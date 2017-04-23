@@ -1,0 +1,65 @@
+﻿@model Kompostowanie.ViewModels.WykresViewModel
+
+@{
+    ViewBag.Title = "Wykres " + Model.LabelY + "/" + Model.LabelX + " doświadczenia " + Model.Doswiadczenie.Nazwa;
+}
+<div class="row-fluid">
+    <div class="span12">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon"> <i class="icon-th"></i> </span>
+                <h5>@ViewBag.Title</h5>
+            </div>
+            <div class="widget-content nopadding">
+                
+                <div id="chart" style="height: 300px; width: 100%;"></div>
+                
+                <div class="form-actions">
+                    @Html.ActionLink("Wróć", "Index", "Doswiadczenie", null, new { @class = "btn" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/Scripts/canvasjs.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function () {
+            var chart = new CanvasJS.Chart("chart", {
+                animationEnabled: true,
+                axisX: {
+                    title: "@Model.LabelX",
+                    includeZero: false
+                },
+                axisY: {
+                    title: "@Model.LabelY",
+                    includeZero: false
+                },
+                data: [
+                    @DrawWykres()
+                ]
+            });
+            chart.render();
+        });
+    </script>
+}
+
+@helper DrawWykres()
+{
+    foreach (var pryzma in Model.Pryzmy)
+    {
+        <text>{</text>
+        <text>type: "spline",</text>
+        <text>showInLegend: true,</text>
+        <text>legendText: "@pryzma.Pryzma",</text>
+        <text>dataPoints: [</text>
+        foreach (var pomiar in pryzma.Pomiary)
+        {
+            <text>{ x: @pomiar.Dzien, y: @Convert.ToString(pomiar.Value).Replace(",", ".") },</text>
+        }
+        <text>]</text>
+        <text>},</text>
+    }
+}

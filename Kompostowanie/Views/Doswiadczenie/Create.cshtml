@@ -1,0 +1,36 @@
+﻿@using Kompostowanie.ViewModels;
+
+@model DoswiadczenieViewModel
+
+@{
+    ViewBag.Title = "Dodaj doświadczenie";
+}
+
+<div class="row-fluid">
+    <div class="span6">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon"> <i class="icon-align-justify"></i> </span>
+                <h5>@ViewBag.Title</h5>
+            </div>
+            <div class="widget-content nopadding">
+                @using (Html.BeginForm("Create", "Doswiadczenie", FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    @Html.Partial("DoswiadczenieModelEditor")
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+
+    <script type="text/javascript">
+        $(function() {
+            $("#Data").datepicker({
+                format: 'yyyy-mm-dd'
+            });
+        });
+    </script>
+}
