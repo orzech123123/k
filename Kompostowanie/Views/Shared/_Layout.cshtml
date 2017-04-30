@@ -77,81 +77,14 @@
 
         <div class="row-fluid">
             <div id="footer" class="span12">
-                2017 &copy; SkyCode
+
             </div>
         </div>
 
-        @*<script src="~/Scripts/excanvas.min.js"></script>*@
         <script src="~/Scripts/jquery.min.js"></script>
         <script src="~/Scripts/jquery.ui.custom.js"></script>
-        <script src="~/Scripts/bootstrap.min.js"></script>
 
         @RenderSection("Scripts", false)
 
-        @*<script src="~/Scripts/jquery.flot.min.js"></script>
-        <script src="~/Scripts/jquery.flot.resize.min.js"></script>
-        <script src="~/Scripts/jquery.peity.min.js"></script>
-        <script src="~/Scripts/fullcalendar.min.js"></script>
-        <script src="~/Scripts/matrix.js"></script>
-        <script src="~/Scripts/matrix.dashboard.js"></script>
-        <script src="~/Scripts/jquery.gritter.min.js"></script>
-        <script src="~/Scripts/matrix.interface.js"></script>
-        <script src="~/Scripts/matrix.chat.js"></script>
-        <script src="~/Scripts/jquery.validate.js"></script>
-        <script src="~/Scripts/matrix.form_validation.js"></script>
-        <script src="~/Scripts/jquery.wizard.js"></script>
-        <script src="~/Scripts/jquery.uniform.js"></script>
-        <script src="~/Scripts/select2.min.js"></script>
-        <script src="~/Scripts/matrix.popover.js"></script>
-        <script src="~/Scripts/jquery.dataTables.min.js"></script>
-        <script src="~/Scripts/matrix.tables.js"></script>*@
-
-        @*<script type="text/javascript">
-                // This function is called from the pop-up menus to transfer to
-                // a different page. Ignore if the value returned is a null string:
-                function goPage(newURL) {
-
-                    // if url is empty, skip the menu dividers and reset the menu selection to default
-                    if (newURL != "") {
-
-                        // if url is "-", it is this page -- reset the menu:
-                        if (newURL == "-") {
-                            resetMenu();
-                        }
-                        // else, send page to designated URL
-                        else {
-                            document.location.href = newURL;
-                        }
-                    }
-                }
-
-                // resets the menu selection upon entry to this page:
-                function resetMenu() {
-                    document.gomenu.selector.selectedIndex = 2;
-                }
-        </script>*@
-
-        <script type="text/javascript">
-            $(function () {
-                var css = [];
-                for (var i = 0; i < document.styleSheets.length; i++) {
-                    var sheet = document.styleSheets[i];
-                    var rules = ('cssRules' in sheet) ? sheet.cssRules : sheet.rules;
-                    if (rules) {
-                        css.push('\n/* Stylesheet : ' + (sheet.href || '[inline styles]') + ' */');
-                        for (var j = 0; j < rules.length; j++) {
-                            var rule = rules[j];
-                            if ('cssText' in rule)
-                                css.push(rule.cssText);
-                            else
-                                css.push(rule.selectorText + ' {\n' + rule.style.cssText + '\n}\n');
-                        }
-                    }
-                }
-                var cssInline = css.join('\n') + '\n';
-
-                console.log(cssInline);
-            });
-        </script>
     </body>
 </html>
