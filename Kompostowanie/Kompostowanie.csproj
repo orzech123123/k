@@ -300,20 +300,10 @@
     <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\wysihtml5-0.3.0.js" />
     <Content Include="Styles\bootstrap-responsive.min.css" />
-    <Content Include="Styles\bootstrap-wysihtml5.css" />
     <Content Include="Styles\bootstrap.min.css" />
-    <Content Include="Styles\colorpicker.css" />
-    <Content Include="Styles\datepicker.css" />
-    <Content Include="Styles\font-awesome.css" />
     <Content Include="Styles\font-awesome\font-awesome.css" />
-    <Content Include="Styles\fullcalendar.css" />
-    <Content Include="Styles\jquery.easy-pie-chart.css" />
-    <Content Include="Styles\jquery.gritter.css" />
-    <Content Include="Styles\matrix-login.css" />
-    <Content Include="Styles\matrix-media.css" />
-    <Content Include="Styles\matrix-style.css" />
-    <Content Include="Styles\select2.css" />
-    <Content Include="Styles\uniform.css" />
+    <Content Include="Styles\font\fontawesome-webfont.svg" />
+    <Content Include="Styles\kompostowanie.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -357,7 +347,6 @@
     <Folder Include="img\gallery\" />
     <Folder Include="img\icons\" />
     <Folder Include="Scripts\font-awesome\" />
-    <Folder Include="Styles\font\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -382,6 +371,10 @@
     <Content Include="Views\Doswiadczenie\Stop.cshtml" />
     <Content Include="Views\Aeracja\Index.cshtml" />
     <Content Include="Views\Aeracja\Create.cshtml" />
+    <Content Include="Styles\font\fontawesome-webfont.eot" />
+    <Content Include="Styles\font\fontawesome-webfont.ttf" />
+    <Content Include="Styles\font\fontawesome-webfont.woff" />
+    <Content Include="Styles\font\FontAwesome.otf" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -5,20 +5,19 @@
         <title>Kompostowanie</title>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
         <link rel="stylesheet" href="~/Styles/bootstrap.min.css" />
         <link rel="stylesheet" href="~/Styles/bootstrap-responsive.min.css" />
-        <link rel="stylesheet" href="~/Styles/fullcalendar.css" />
-        <link rel="stylesheet" href="~/Styles/matrix-style.css" />
-        <link rel="stylesheet" href="~/Styles/matrix-media.css" />
+
+        <link rel="stylesheet" href="~/Styles/kompostowanie.css" />
+
         <link href="~/Styles/font-awesome/font-awesome.css" rel="stylesheet" />
-        <link rel="stylesheet" href="~/Styles/jquery.gritter.css" />
+
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
     </head>
     <body>
         <div id="header">
-            <h1>
-                <a href="dashboard.html"></a>
-            </h1>
+
         </div>     
           
         <div id="user-nav" class="navbar navbar-inverse" style="text-align: right">
@@ -78,18 +77,18 @@
 
         <div class="row-fluid">
             <div id="footer" class="span12">
-                2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a>
+                2017 &copy; SkyCode
             </div>
         </div>
 
-        <script src="~/Scripts/excanvas.min.js"></script>
+        @*<script src="~/Scripts/excanvas.min.js"></script>*@
         <script src="~/Scripts/jquery.min.js"></script>
         <script src="~/Scripts/jquery.ui.custom.js"></script>
         <script src="~/Scripts/bootstrap.min.js"></script>
 
         @RenderSection("Scripts", false)
 
-        <script src="~/Scripts/jquery.flot.min.js"></script>
+        @*<script src="~/Scripts/jquery.flot.min.js"></script>
         <script src="~/Scripts/jquery.flot.resize.min.js"></script>
         <script src="~/Scripts/jquery.peity.min.js"></script>
         <script src="~/Scripts/fullcalendar.min.js"></script>
@@ -105,9 +104,9 @@
         <script src="~/Scripts/select2.min.js"></script>
         <script src="~/Scripts/matrix.popover.js"></script>
         <script src="~/Scripts/jquery.dataTables.min.js"></script>
-        <script src="~/Scripts/matrix.tables.js"></script>
+        <script src="~/Scripts/matrix.tables.js"></script>*@
 
-        <script type="text/javascript">
+        @*<script type="text/javascript">
                 // This function is called from the pop-up menus to transfer to
                 // a different page. Ignore if the value returned is a null string:
                 function goPage(newURL) {
@@ -130,6 +129,29 @@
                 function resetMenu() {
                     document.gomenu.selector.selectedIndex = 2;
                 }
+        </script>*@
+
+        <script type="text/javascript">
+            $(function () {
+                var css = [];
+                for (var i = 0; i < document.styleSheets.length; i++) {
+                    var sheet = document.styleSheets[i];
+                    var rules = ('cssRules' in sheet) ? sheet.cssRules : sheet.rules;
+                    if (rules) {
+                        css.push('\n/* Stylesheet : ' + (sheet.href || '[inline styles]') + ' */');
+                        for (var j = 0; j < rules.length; j++) {
+                            var rule = rules[j];
+                            if ('cssText' in rule)
+                                css.push(rule.cssText);
+                            else
+                                css.push(rule.selectorText + ' {\n' + rule.style.cssText + '\n}\n');
+                        }
+                    }
+                }
+                var cssInline = css.join('\n') + '\n';
+
+                console.log(cssInline);
+            });
         </script>
     </body>
 </html>
