@@ -268,12 +268,12 @@
     <Content Include="Scripts\Kompostowanie\DoswiadczenieStartViewModel.js" />
     <Content Include="Scripts\Kompostowanie\SkladnikiViewModel.js" />
     <Content Include="Scripts\linq.js" />
-    <Content Include="Styles\b.css" />
+    <Content Include="Styles\kompostowanie-layout.css" />
     <Content Include="Styles\bootstrap.min.css" />
     <Content Include="Styles\font-awesome.css" />
     <Content Include="Styles\font-awesome\font-awesome.css" />
     <Content Include="Styles\font\fontawesome-webfont.svg" />
-    <Content Include="Styles\kompostowanie.css" />
+    <Content Include="Styles\kompostowanie-components.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
