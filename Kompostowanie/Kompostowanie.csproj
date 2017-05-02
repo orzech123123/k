@@ -255,6 +255,7 @@
     <Content Include="img\select2.png" />
     <Content Include="img\spinner.gif" />
     <Content Include="img\sprite.png" />
+    <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap-wysihtml5.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\canvasjs.min.js" />
@@ -267,6 +268,7 @@
     <Content Include="Scripts\Kompostowanie\DoswiadczenieStartViewModel.js" />
     <Content Include="Scripts\Kompostowanie\SkladnikiViewModel.js" />
     <Content Include="Scripts\linq.js" />
+    <Content Include="Styles\b.css" />
     <Content Include="Styles\bootstrap-responsive.min.css" />
     <Content Include="Styles\bootstrap.min.css" />
     <Content Include="Styles\font-awesome.css" />
