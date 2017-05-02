@@ -269,7 +269,6 @@
     <Content Include="Scripts\Kompostowanie\SkladnikiViewModel.js" />
     <Content Include="Scripts\linq.js" />
     <Content Include="Styles\b.css" />
-    <Content Include="Styles\bootstrap-responsive.min.css" />
     <Content Include="Styles\bootstrap.min.css" />
     <Content Include="Styles\font-awesome.css" />
     <Content Include="Styles\font-awesome\font-awesome.css" />
