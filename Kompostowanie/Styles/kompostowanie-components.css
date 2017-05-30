@@ -11,7 +11,26 @@ body {
     color: #666;
 }
 
+.article-container {
+    margin: 0;  
+    overflow: auto
+}
+.article-image {
+    float: left
+}
+.article-image img {
+    display: block
+}
+.article-content {
+    margin-left: 210px
+}
+.article-content p {
+    margin: 0;
+}
+
 #header {
+    background-image: url('/img/logo.png');
+    background-repeat: no-repeat;
     height: 77px;
     position: relative;
     width: 100%;

@@ -1,4 +1,5 @@
 ﻿@using Kompostowanie.Helpers
+@using Action = Kompostowanie.Helpers.Action
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -39,7 +40,9 @@
             <ul>
                 @if (SessionHelper.UserSession(Session) != null)
                 {
-                    <li class="active"><a href="@Url.Action("Index", "Doswiadczenie")"><i class="icon icon-home"></i><span> Doświadczenia</span></a> </li>
+                    <li class="@MenuHelper.FillActiveClass(Action.Doswiadczenie)"><a href="@Url.Action("Index", "Doswiadczenie")"><i class="icon icon-home"></i><span> Doświadczenia</span></a> </li>
+                    <li class="@MenuHelper.FillActiveClass(Action.About)"><a href="@Url.Action("About", "LoremIpsum")"><i class="icon icon-bookmark"></i><span> O firmie</span></a> </li>
+                    <li class="@MenuHelper.FillActiveClass(Action.Contact)"><a href="@Url.Action("Contact", "LoremIpsum")"><i class="icon icon-beer"></i><span> Kontakt</span></a> </li>
                 }
             </ul>
         </div>

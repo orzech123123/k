@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "Kontakt";
+}
+
+<div class="row-fluid">
+    <div class="span6">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon"> <i class="icon-align-justify"></i> </span>
+                <h5>@ViewBag.Title</h5>
+            </div>
+            <div class="widget-content nopadding">
+                <div class="article-container">                
+                    <div class="article-image">
+                        <img src="/img/contact.jpg"/>
+                    </div>
+                    <div class="article-content">
+                        <p>
+                            Vivamus eget mauris non nulla ullamcorper egestas porttitor ac mauris. In eget nibh sit amet lacus volutpat laoreet. Nullam vitae tempor dolor, pulvinar tempus ipsum. In dapibus, est eu ultrices dignissim, orci orci pretium mi, id ornare tortor diam et leo. Quisque vitae mauris ipsum. Donec mattis nisl diam, vitae ultrices mi consectetur vitae. Donec euismod mauris nec nisi maximus volutpat. Mauris vehicula orci eros, laoreet viverra sem egestas pretium. Quisque et dui ullamcorper, interdum dolor nec, aliquet felis. In tincidunt ipsum nec purus ultrices, at dictum tellus molestie. Phasellus tempus elit vitae lacus pretium posuere. Mauris libero purus, mattis mollis eleifend id, elementum sit amet massa. Praesent pellentesque felis orci, sed consectetur sem accumsan ut. Mauris lobortis vulputate massa ut luctus.
+                        </p>
+                    </div>
+                    
+                    
+                   
+                </div>
+                
+                <script src='http://maps.google.com/maps/api/js?sensor=false&key=AIzaSyDB9Q4J-gqHDhblg_bthrv1milPg2UZ6TA'></script>
+                <div style='overflow: hidden; height: 440px;'>
+                    <div id='gmap_canvas' style='height: 440px;'></div>
+                    <div><small><a href="http://embedgooglemaps.com">embed google maps</a></small>
+                    </div>
+                    <div><small><a href="http://couponcode.ng/hostgator/">You can get an extra benefit by using these Hostgator coupon code</a></small>
+                    </div>
+                    <style>
+                        #gmap_canvas img {
+                            max-width: none !important;
+                            background: none !important
+                        }
+                    </style>
+                </div>
+                <script type='text/javascript'>
+                    function init_map() {
+                        var myOptions = {
+                            zoom: 11,
+                            center: new google.maps.LatLng(52.406374, 16.925168100000064),
+                            mapTypeId: google.maps.MapTypeId.TERRAIN
+                        };
+                        map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);
+                        marker = new google.maps.Marker({
+                            map: map,
+                            position: new google.maps.LatLng(52.406374, 16.925168100000064)
+                        });
+                        infowindow = new google.maps.InfoWindow({
+                            content: '<strong>KomPost</strong><br>Poznań, Polska<br>'
+                        });
+                        google.maps.event.addListener(marker, 'click', function() {
+                            infowindow.open(map, marker);
+                        });
+                        infowindow.open(map, marker);
+                    }
+                    google.maps.event.addDomListener(window, 'load', init_map);
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
